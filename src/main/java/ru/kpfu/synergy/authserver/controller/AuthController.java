@@ -11,8 +11,11 @@ import ru.kpfu.synergy.authserver.service.api.AuthService;
 
 @RestController
 public class AuthController {
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/auth")
     public ResponseEntity auth(@RequestParam String login, @RequestParam String password) {

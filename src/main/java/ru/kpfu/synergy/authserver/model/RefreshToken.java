@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Data
 @Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "refresh_token")
 public class RefreshToken {
     @Id

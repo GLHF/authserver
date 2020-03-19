@@ -24,19 +24,22 @@ import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final PasswordEncoder passwordEncoder;
     @Value("secret")
     private String secret;
+
+    public AuthServiceImpl(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public AuthDto auth(String login, String password) throws AuthException{
         Optional<User> userOptional = userRepository.findByLogin(login);
-        User user = userOptional.orElseThrow(() -> new AuthException());
+        User user = userOptional.orElseThrow(AuthException::new);
         if (!passwordEncoder.matches(password, user.getHashPassword())) {
             throw new AuthException();
         }
@@ -50,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthDto refresh(String refreshToken) throws AuthException {
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.getByToken(refreshToken);
-        RefreshToken refreshTokenObject = refreshTokenOptional.orElseThrow(() -> new AuthException());
+        RefreshToken refreshTokenObject = refreshTokenOptional.orElseThrow(AuthException::new);
         String login = refreshTokenObject.getUser().getLogin();
         refreshTokenRepository.delete(refreshTokenObject);
         return AuthDto.builder()
