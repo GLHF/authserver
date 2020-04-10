@@ -13,6 +13,7 @@ import ru.kpfu.synergy.authserver.form.RegistrationForm;
 import ru.kpfu.synergy.authserver.service.api.AuthService;
 
 @RestController
+@RequestMapping("/user")
 public class AuthController {
     private final AuthService authService;
 
