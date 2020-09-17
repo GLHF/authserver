@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Table(name = "refresh_token")
 public class RefreshToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "refresh_token_id_seq")
+    @SequenceGenerator(name = "refresh_token_id_seq", allocationSize = 1)
     private Long id;
     @Column(unique = true, nullable = false)
     private String token;

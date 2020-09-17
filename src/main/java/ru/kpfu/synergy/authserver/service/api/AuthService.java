@@ -3,7 +3,6 @@ package ru.kpfu.synergy.authserver.service.api;
 import ru.kpfu.synergy.authserver.dto.AuthDto;
 import ru.kpfu.synergy.authserver.exception.AuthException;
 
-import java.util.Optional;
 
 public interface AuthService {
     AuthDto auth(String login, String password) throws AuthException;
