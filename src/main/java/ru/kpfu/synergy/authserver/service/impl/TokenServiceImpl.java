@@ -35,7 +35,6 @@ public class TokenServiceImpl implements TokenService {
     private static final String LOGIN_CLAIM = "login";
 
     @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public String generateAccessToken(String login) throws AuthException {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
